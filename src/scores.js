@@ -176,10 +176,7 @@ export default class Scores extends Component<{}> {
                       <Image source={require('./assets/drawer.png')} style={{width:30, height:30}}/>
                     </View>
                   </TouchableHighlight>
-                  <View style={{alignItems:'center'}}>
-                    <Text ref='x' style={{fontSize:18, color:'black'}}>{this.state.compName}</Text>
-                    <Text>Gameweek {this.state.gameWeek}</Text>
-                  </View>
+
                   <View style={{width:30}}></View>
                 </View>
                 <CalendarStrip
@@ -203,7 +200,43 @@ export default class Scores extends Component<{}> {
 
 
               <ScrollView style={{flex:1, height: 1000}}>
-                {matches}
+                <View elevation={20} style={[styles.gameView,{marginTop:15}]}>
+
+                  <View style={{flexDirection:'row',justifyContent:'center', alignItems:'center', marginLeft:50, marginRight:50, marginBottom:10,marginTop:30}}>
+                    <View style={{alignItems:'center', width: (width-100)/2-25}}>
+                      <Image source={{uri: 'https://firebasestorage.googleapis.com/v0/b/freakick-c4717.appspot.com/o/clubs%2Freal-madrid-logo.png?alt=media&token=e33689bd-7b87-4c88-81eb-f1f45662315a'}} style={{height:50, width:50}}/>
+                      <Text style={{fontSize:13,color:'#9B9B9B',marginTop:10,fontWeight:"100"}}>Real Madrid</Text>
+                    </View>
+                    <View style={{marginTop:-10, alignItems:'center', width:50}}>
+                      <Text style={{fontSize:20, color:'black',fontWeight:"600",fontSize:24,letterSpacing:5}}>3:1</Text>
+                    </View>
+                    <View style={{alignItems:'center', width: (width-100)/2-25}}>
+                      <Image source={{uri: 'https://firebasestorage.googleapis.com/v0/b/freakick-c4717.appspot.com/o/clubs%2Fbarcelona-fc-logo.png?alt=media&token=eafde74f-82f2-42a8-bde1-85dbc11c1f48'}} style={{height:50, width:50}}/>
+                      <Text style={{fontSize:13,color:'#9B9B9B',marginTop:10,fontWeight:"100"}}>Barcelona</Text>
+                    </View>
+                  </View>
+
+                  <View>
+                    <View style={{height:0.5, backgroundColor:'#E9E9E9'}}></View>
+                      <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+                        <TouchableHighlight style={{flexDirection:'row', marginLeft:40, marginTop:10, marginBottom:10}}>
+                          <View style={{flexDirection:'row', alignItems:'center'}}>
+                            <Image source={require('./assets/stats.png')}/>
+                            <Text style={{marginLeft:5, fontSize:10,color:'#9B9B9B'}}>View Statistics</Text>
+                          </View>
+                        </TouchableHighlight>
+
+                        <View></View>
+
+                        <TouchableHighlight style={{flexDirection:'row', marginRight:40, marginTop:10, marginBottom:10}}>
+                          <View style={{flexDirection:'row', alignItems:'center'}}>
+                            <Image source={require('./assets/comment.png')}/>
+                            <Text style={{marginLeft:5,fontSize:10,color:"#9B9B9B"}}>Live comments</Text>
+                          </View>
+                        </TouchableHighlight>
+                    </View>
+                  </View>
+                </View>
               </ScrollView>
 
         </View>
@@ -220,7 +253,8 @@ const styles = StyleSheet.create({
   gameView:{
     backgroundColor:'white',
     marginBottom:20,
-    height:171,
+    height:150,
+    width:338,
     marginLeft:20,
     marginRight:20,
     borderRadius:5,
