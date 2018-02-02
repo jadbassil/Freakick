@@ -1,9 +1,3 @@
-/**
-* Sample React Native App
-* https://github.com/facebook/react-native
-* @flow
-*/
-
 import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View, Image, TouchableHighlight, ScrollView, Dimensions, Alert } from 'react-native';
 import CalendarStrip from 'react-native-calendar-strip';
@@ -16,6 +10,16 @@ var {height, width} = Dimensions.get('window');
 
 export default class Scores extends Component<{}> {
 
+  static navigationOptions = {
+   tabBarLabel: 'Live Score',
+   tabBarIcon: ({tintColor}) => (
+     <Image
+       source={require('./assets/stats.png')}
+       style={[styles.icon, {tintColor: 'yellow'}]}
+     />
+   ),
+ };
+
   constructor(props){
     super(props);
     this.getmatches = this.getmatches.bind(this);
@@ -27,6 +31,7 @@ export default class Scores extends Component<{}> {
       compName: 'UEFA Champions League',
     }
   }
+
 
   componentWillMount(){
     this.getmatches(moment().format('DD.MM.YYYY'), this.state.compId);
