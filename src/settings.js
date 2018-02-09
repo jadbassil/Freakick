@@ -1,9 +1,3 @@
-/**
-* Sample React Native App
-* https://github.com/facebook/react-native
-* @flow
-*/
-
 import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View, Image, TouchableHighlight, ScrollView, Dimensions } from 'react-native';
 import {TabNavigator} from 'react-navigation';
@@ -16,7 +10,7 @@ export default class Settings extends Component<{}> {
   static navigationOptions = {
      tabBarLabel: 'Settings',
      // Note: By default the icon is only shown on iOS. Search the showIcon option below.
-     tabBarIcon: ({ tintColor }) => (
+     tabBarIcon: ({ t4intColor }) => (
        <Image
          source={require('./assets/barcelona.png')}
          style={{tintColor: tintColor, height:26, width:26}}
