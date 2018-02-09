@@ -16,8 +16,8 @@ export default class Profile extends Component<{}> {
      // Note: By default the icon is only shown on iOS. Search the showIcon option below.
      tabBarIcon: ({ tintColor }) => (
        <Image
-         source={require('./assets/barcelona.png')}
-         style={{tintColor: tintColor, height:26, width:26}}
+         source={require('./assets/profile.png')}
+         style={{tintColor: tintColor}}
        />
      ),
    };
@@ -26,26 +26,7 @@ export default class Profile extends Component<{}> {
 render() {
   return (
     <View style={styles.container}>
-      <View>
-        <Text>Profile</Text>
-      </View>
-      <LinearGradient elevation={40} colors={['#FDBE21','#FAD961']} start={{x:0.0, y:0.0}} end={{x:1.0, y:0.0}} style={{justifyContent:'space-between', flexDirection:'row', height:100, marginBottom:-50}}>
-        <TouchableHighlight onPress={(e)=>this.props.navigation.navigate('Scores')}>
-          <View>
-            <Text>Scores</Text>
-          </View>
-        </TouchableHighlight>
-        <TouchableHighlight onPress={(e)=>this.props.navigation.navigate('Profile')}>
-          <View>
-            <Text>My Profile</Text>
-          </View>
-        </TouchableHighlight>
-        <TouchableHighlight onPress={(e)=>this.props.navigation.navigate('Settings')}>
-          <View>
-            <Text>Settings</Text>
-          </View>
-        </TouchableHighlight>
-      </LinearGradient>
+      <Text style={{marginTop:30}}>Hello World</Text>
     </View>
     );
   }
@@ -58,4 +39,8 @@ container: {
   width:'100%',
   justifyContent:'space-between'
 },
+icon:{
+  width:25.39,
+  height:24.21
+}
 });

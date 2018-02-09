@@ -14,8 +14,8 @@ export default class Scores extends Component<{}> {
    tabBarLabel: 'Live Score',
    tabBarIcon: ({tintColor}) => (
      <Image
-       source={require('./assets/stats.png')}
-       style={[styles.icon, {tintColor: 'yellow'}]}
+       source={require('./assets/profile.png')}
+       style={[styles.icon, {tintColor: tintColor}]}
      />
    ),
  };
@@ -31,7 +31,6 @@ export default class Scores extends Component<{}> {
       compName: 'UEFA Champions League',
     }
   }
-
 
   componentWillMount(){
     this.getmatches(moment().format('DD.MM.YYYY'), this.state.compId);
@@ -174,7 +173,7 @@ export default class Scores extends Component<{}> {
 
         <View style={styles.container}>
 
-              <LinearGradient colors={['#FDBE21','#FAD961']} start={{x:0.0, y:0.0}} end={{x:1.0, y:0.0}} style={{justifyContent:'space-between'}}>
+              <LinearGradient colors={['#FDBE21','#FAD961']} start={{x:0.0, y:0.0}} end={{x:1.0, y:0.0}} style={{justifyContent:'space-between',height:110}}>
                 <View style={{alignItems:'center', flexDirection:'row', justifyContent:'space-between', marginLeft:20, marginRight:20, marginTop:15}}>
                   <TouchableHighlight onPress={() => this._drawer.open()}>
                     <View style={{flexDirection:'row', alignItems:'center'}}>
@@ -205,7 +204,7 @@ export default class Scores extends Component<{}> {
 
 
               <ScrollView style={{flex:1, height: 1000}}>
-                <View elevation={20} style={[styles.gameView,{marginTop:15}]}>
+                <View elevation={20} style={[styles.gameView,{marginTop:15,}]}>
 
                   <View style={{flexDirection:'row',justifyContent:'center', alignItems:'center', marginLeft:50, marginRight:50, marginBottom:10,marginTop:30}}>
                     <View style={{alignItems:'center', width: (width-100)/2-25}}>
@@ -265,6 +264,7 @@ const styles = StyleSheet.create({
     borderRadius:5,
     justifyContent:'space-between',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 }
+    shadowOffset: { width: 0, height: 2 },
+    alignItems:'center'
   },
 });

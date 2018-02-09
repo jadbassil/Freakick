@@ -4,15 +4,14 @@ import {TabNavigator} from 'react-navigation';
 import LinearGradient from 'react-native-linear-gradient';
 
 
-
 export default class Settings extends Component<{}> {
 
   static navigationOptions = {
    tabBarLabel: 'Favorite',
    tabBarIcon: ({tintColor}) => (
      <Image
-       source={require('./assets/stats.png')}
-       style={[styles.icon, {tintColor: 'yellow'}]}
+       source={require('./assets/favorite.png')}
+       style={[styles.icon, {tintColor:tintColor}]}
      />
    ),
   };
@@ -53,4 +52,8 @@ container: {
   flexDirection:'row',
   width:'100%'
 },
+icon:{
+  width:25.39,
+  height:24.21
+}
 });

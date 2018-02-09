@@ -5,14 +5,13 @@ import Scores from './src/scores.js';
 import Profile from './src/profile.js';
 import Favourite from './src/favourite.js'
 
-/*var mainScreenNavigator = StackNavigator({
+var mainScreenNavigator = StackNavigator({
   Scores: {screen: Scores},
   Profile: {screen: Profile},
-  Settings: {screen: Settings},
 },
   {
     headerMode:'none',
-});*/
+});
 
 const MyApp = TabNavigator({
   Scores: {
@@ -28,7 +27,7 @@ const MyApp = TabNavigator({
   tabBarPosition: 'bottom',
   animationEnabled: false,
   tabBarOptions: {
-    activeTintColor: '#e91e63',
+    activeTintColor: '#F7C01C',
   },
 });
 

@@ -12,7 +12,7 @@ export default class Settings extends Component<{}> {
      // Note: By default the icon is only shown on iOS. Search the showIcon option below.
      tabBarIcon: ({ t4intColor }) => (
        <Image
-         source={require('./assets/barcelona.png')}
+         source={require('./assets/profile.png')}
          style={{tintColor: tintColor, height:26, width:26}}
        />
      ),
