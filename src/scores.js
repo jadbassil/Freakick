@@ -3,7 +3,7 @@ import { Platform, StyleSheet, Text, View, Image, TouchableHighlight, ScrollView
 import CalendarStrip from 'react-native-calendar-strip';
 import LinearGradient from 'react-native-linear-gradient';
 import moment from 'moment';
-import Drawer from 'react-native-drawer';
+import Drawer from 'react-native-drawer-menu';
 import axios from 'axios';
 
 var {height, width} = Dimensions.get('window');
@@ -14,7 +14,7 @@ export default class Scores extends Component<{}> {
    tabBarLabel: 'Live Score',
    tabBarIcon: ({tintColor}) => (
      <Image
-       source={require('./assets/profile.png')}
+       source={require('./assets/scores.png')}
        style={[styles.icon, {tintColor: tintColor}]}
      />
    ),
@@ -27,8 +27,8 @@ export default class Scores extends Component<{}> {
     this.state={
       data:[],
       competitions:[],
-      compId:1005,
-      compName: 'UEFA Champions League',
+      compId:1204,
+      compName:'Premier League',
     }
   }
 
@@ -45,13 +45,12 @@ export default class Scores extends Component<{}> {
 
   getmatches(day, comp){
     console.log('getting matches ...');
-    axios.get('http://api.football-api.com/2.0/matches',{
+    axios.get('http://api.football-api.com/2.0/matches?Authorization=565ec012251f932ea4000001fa542ae9d994470e73fdb314a8a56d76',{
       params: {
         comp_id : comp,
         from_date : day,
         to_date : day,
-        gameWeek: '',
-        Authorization : '565ec012251f932ea4000001fa542ae9d994470e73fdb314a8a56d76'
+        gameWeek: ''
       }
     })
       .then(function (response){
@@ -88,9 +87,9 @@ export default class Scores extends Component<{}> {
   render() {
 
     const competitions = this.state.competitions.map( (item) =>{
-      return(
-            <View>
-              <TouchableHighlight style={styles.container , {height:80, justifyContent:'center'}} onPress={()=>{
+      return (
+        <View key={item.id}>
+              <TouchableHighlight style={styles.container,{height:80, justifyContent:'center'}} onPress={()=>{
                 this.setState({compId: item.id, compName: item.name});
                 console.log(this.state.compId);
                 this.getmatches(this.calendar.getSelectedDate().format('DD.MM.YYYY'), item.id);
@@ -105,82 +104,68 @@ export default class Scores extends Component<{}> {
                   </View>
                   <View style={{width:40}}></View>
                 </View>
-
+                
               </TouchableHighlight>
             </View>
       )
     })
 
     const matches = this.state.data.map( (item) =>{
-      if(item != "No matches this day")
-        return (
-          <View elevation={20} style={[styles.gameView,{marginTop:15}]}>
-            <View style={{alignItems:'center'}}>
-              <Text style={{fontSize:15, fontWeight:'bold'}}>{item.formatted_date}</Text>
-              <Text>{item.venue}</Text>
-            </View>
-
-            <View style={{flexDirection:'row',justifyContent:'center', alignItems:'center', marginLeft:50, marginRight:50, marginBottom:10}}>
-              <View style={{alignItems:'center', width: (width-100)/2-25}}>
-                <Image source={require('./assets/realmadrid.png')} style={{height:60, width:60}}/>
-                <Text style={{fontSize:12}}>{item.localteam_name}</Text>
-              </View>
-              <View style={{marginTop:20, alignItems:'center', width:50}}>
-                <Text style={{fontSize:20, color:'black'}}>{item.localteam_score} : {item.visitorteam_score}</Text>
-                <Text>{this.gameStatus(item.status, item.time)}</Text>
-              </View>
-              <View style={{alignItems:'center', width: (width-100)/2-25}}>
-                <Image source={require('./assets/barcelona.png')} style={{height:60, width:60}}/>
-                <Text style={{fontSize:12}}>{item.visitorteam_name}</Text>
-              </View>
-            </View>
-
-            <View>
-              <View style={{height:1, backgroundColor:'grey'}}></View>
-                <View style={{flexDirection:'row', justifyContent:'space-between'}}>
-                  <TouchableHighlight style={{flexDirection:'row', marginLeft:40, marginTop:10, marginBottom:10}}>
-                    <View style={{flexDirection:'row', alignItems:'center'}}>
-                      <Image source={require('./assets/stats.png')}/>
-                      <Text style={{marginLeft:5, fontSize:12}}>View Statistics</Text>
-                    </View>
-                  </TouchableHighlight>
-
-                  <View></View>
-
-                  <TouchableHighlight style={{flexDirection:'row', marginRight:40, marginTop:10, marginBottom:10}}>
-                    <View style={{flexDirection:'row', alignItems:'center'}}>
-                      <Image source={require('./assets/comment.png')}/>
-                      <Text style={{marginLeft:5, fontSize:12}}>Live comments</Text>
-                    </View>
-                  </TouchableHighlight>
-              </View>
-            </View>
+     if(item != "No matches this day"){
+      return (
+        <View key={item.id} elevation={20} style={[styles.gameView,{marginTop:15}]}>
+        <View style={{flexDirection:'row',justifyContent:'center', alignItems:'center', marginLeft:50, marginRight:50, marginBottom:10,marginTop:30}}>
+          <View style={{alignItems:'center', width: (width-100)/2-25}}>
+            <Image source={{uri: 'https://firebasestorage.googleapis.com/v0/b/freakick-c4717.appspot.com/o/clubs%2Fla%20ligua%2FReal-Betis.png?alt=media&token=dfd8de0c-88d0-4347-a2d6-964e362ec783'}} style={{height:50, width:50}}/>
+            <Text style={{fontSize:13,color:'#9B9B9B',marginTop:10,fontWeight:"100"}}>{item.localteam_name}</Text>
           </View>
-          )
-          else
-            return (<View style={{alignItems:'center'}}><Text style={{fontSize:20}}>No matches this day</Text></View>)
-        }
-        )
+          <View style={{marginTop:-10, alignItems:'center', width:50}}>
+            <Text style={{fontSize:20, color:'black',fontWeight:"600",fontSize:24,letterSpacing:2,alignSelf:'center'}}>{item.localteam_score}:{item.visitorteam_score}</Text>
+          </View>
+          <View style={{alignItems:'center', width: (width-100)/2-25}}>
+            <Image source={{uri: 'https://firebasestorage.googleapis.com/v0/b/freakick-c4717.appspot.com/o/clubs%2Fla%20ligua%2FCD-Alav%C3%A9s.png?alt=media&token=9a3725de-053a-411d-b458-a8bf844941f0'}} style={{height:50, width:50}}/>
+            <Text style={{fontSize:13,color:'#9B9B9B',marginTop:10,fontWeight:"100",}}>{item.visitorteam_name}</Text>
+          </View>
+        </View>
+  
+        <View>
+          <View style={{height:0.5, backgroundColor:'#E9E9E9'}}></View>
+            <View style={{flexDirection:'row', justifyContent:'space-between',alignSelf:'center'}}>
+  
+              <TouchableHighlight style={{flexDirection:'row', marginTop:10, marginBottom:10}} onPress={(e)=>this.props.navigation.navigate('Profile')}>
+                <View style={{flexDirection:'row', alignItems:'center'}}>
+                  <Image source={require('./assets/stats.png')}/>
+                  <Text style={{marginLeft:5, fontSize:10,color:'#9B9B9B'}}>View Statistics</Text>
+                </View>
+              </TouchableHighlight>
+  
+              <View style={{marginLeft:40,marginRight:40}}></View>
+  
+              <TouchableHighlight style={{flexDirection:'row',marginTop:10, marginBottom:10}}>
+                <View style={{flexDirection:'row', alignItems:'center'}}>
+                  <Image source={require('./assets/comment.png')}/>
+                  <Text style={{marginLeft:5,fontSize:10,color:"#9B9B9B"}}>Live comments</Text>
+                </View>
+              </TouchableHighlight>
+  
+          </View>
+        </View>
+      </View>
+       )
+     }else {
+      return (<View style={{alignItems:'center'}}><Text style={{fontSize:20}}>No matches this day</Text></View>)
+     }
+    })
 
     return (
-      <Drawer
-        ref = {(ref) => this._drawer = ref}
-        tapToClose = {true}
-        content =
-        {
-          <ScrollView>{competitions}</ScrollView>
-        }>
 
         <View style={styles.container}>
 
-              <LinearGradient colors={['#FDBE21','#FAD961']} start={{x:0.0, y:0.0}} end={{x:1.0, y:0.0}} style={{justifyContent:'space-between',height:110}}>
-                <View style={{alignItems:'center', flexDirection:'row', justifyContent:'space-between', marginLeft:20, marginRight:20, marginTop:15}}>
-                  <TouchableHighlight onPress={() => this._drawer.open()}>
-                    <View style={{flexDirection:'row', alignItems:'center'}}>
-                      <Image source={require('./assets/drawer.png')} style={{width:30, height:30}}/>
+              <LinearGradient colors={['#FDBE21','#FAD961']} start={{x:0.0, y:0.0}} end={{x:1.0, y:0.0}} style={{justifyContent:'space-between',height:130}}>
+                    <View style={{alignItems:'center'}}>
+                    <Image source={require('./assets/blogo.png')} style={{width:110,height:20,marginTop:35,marginBottom:-20}}/>
                     </View>
-                  </TouchableHighlight>
-
+                <View style={{alignItems:'center', flexDirection:'row', justifyContent:'space-between', marginLeft:20, marginRight:20, marginTop:15}}>
                   <View style={{width:30}}></View>
                 </View>
                 <CalendarStrip
@@ -189,14 +174,14 @@ export default class Scores extends Component<{}> {
                     style={{height: 70, paddingTop: 0, paddingBottom: 10}}
                     calendarHeaderStyle={{color: 'transparent'}}
                     calendarColor={'transparent'}
-                    dateNumberStyle={{color: 'black', fontWeight:'normal'}}
-                    dateNameStyle={{color: 'black', fontWeight:'normal'}}
-                    highlightDateNumberStyle={{color: 'black', fontWeight:'bold'}}
-                    highlightDateNameStyle={{color: 'black', fontWeight:'bold'}}
-                    disabledDateNameStyle={{color: 'black', fontWeight:'normal'}}
-                    disabledDateNumberStyle={{color: 'black', fontWeight:'normal'}}
-                    weekendDateNameStyle={{color: 'black', fontWeight:'normal'}}
-                    weekendDateNumberStyle={{color: 'black', fontWeight:'normal'}}
+                    dateNumberStyle={{color: 'black', fontWeight:'300'}}
+                    dateNameStyle={{color: 'black', fontWeight:'300'}}
+                    highlightDateNumberStyle={{color: '#282828', fontWeight:'bold'}}
+                    highlightDateNameStyle={{color: '#282828', fontWeight:'bold'}}
+                    disabledDateNameStyle={{color: '#282828', fontWeight:'300'}}
+                    disabledDateNumberStyle={{color: '#282828', fontWeight:'300'}}
+                    weekendDateNameStyle={{color: '#282828', fontWeight:'300'}}
+                    weekendDateNumberStyle={{color: '#282828', fontWeight:'300'}}
                     onDateSelected={(e)=>{console.log(e.format('DD.MM.YYYY')), this.getmatches(e.format('DD.MM.YYYY'), this.state.compId);}}
                     ref={(elem) => this.calendar = elem}
                   />
@@ -204,47 +189,12 @@ export default class Scores extends Component<{}> {
 
 
               <ScrollView style={{flex:1, height: 1000}}>
-                <View elevation={20} style={[styles.gameView,{marginTop:15,}]}>
-
-                  <View style={{flexDirection:'row',justifyContent:'center', alignItems:'center', marginLeft:50, marginRight:50, marginBottom:10,marginTop:30}}>
-                    <View style={{alignItems:'center', width: (width-100)/2-25}}>
-                      <Image source={{uri: 'https://firebasestorage.googleapis.com/v0/b/freakick-c4717.appspot.com/o/clubs%2Freal-madrid-logo.png?alt=media&token=e33689bd-7b87-4c88-81eb-f1f45662315a'}} style={{height:50, width:50}}/>
-                      <Text style={{fontSize:13,color:'#9B9B9B',marginTop:10,fontWeight:"100"}}>Real Madrid</Text>
-                    </View>
-                    <View style={{marginTop:-10, alignItems:'center', width:50}}>
-                      <Text style={{fontSize:20, color:'black',fontWeight:"600",fontSize:24,letterSpacing:5}}>3:1</Text>
-                    </View>
-                    <View style={{alignItems:'center', width: (width-100)/2-25}}>
-                      <Image source={{uri: 'https://firebasestorage.googleapis.com/v0/b/freakick-c4717.appspot.com/o/clubs%2Fbarcelona-fc-logo.png?alt=media&token=eafde74f-82f2-42a8-bde1-85dbc11c1f48'}} style={{height:50, width:50}}/>
-                      <Text style={{fontSize:13,color:'#9B9B9B',marginTop:10,fontWeight:"100"}}>Barcelona</Text>
-                    </View>
-                  </View>
-
-                  <View>
-                    <View style={{height:0.5, backgroundColor:'#E9E9E9'}}></View>
-                      <View style={{flexDirection:'row', justifyContent:'space-between'}}>
-                        <TouchableHighlight style={{flexDirection:'row', marginLeft:40, marginTop:10, marginBottom:10}}>
-                          <View style={{flexDirection:'row', alignItems:'center'}}>
-                            <Image source={require('./assets/stats.png')}/>
-                            <Text style={{marginLeft:5, fontSize:10,color:'#9B9B9B'}}>View Statistics</Text>
-                          </View>
-                        </TouchableHighlight>
-
-                        <View></View>
-
-                        <TouchableHighlight style={{flexDirection:'row', marginRight:40, marginTop:10, marginBottom:10}}>
-                          <View style={{flexDirection:'row', alignItems:'center'}}>
-                            <Image source={require('./assets/comment.png')}/>
-                            <Text style={{marginLeft:5,fontSize:10,color:"#9B9B9B"}}>Live comments</Text>
-                          </View>
-                        </TouchableHighlight>
-                    </View>
-                  </View>
+                <View style={{alignItems:'center',marginTop:10}}>
+                {matches}
                 </View>
               </ScrollView>
 
         </View>
-      </Drawer>
     );
   }
 }
@@ -257,14 +207,15 @@ const styles = StyleSheet.create({
   gameView:{
     backgroundColor:'white',
     marginBottom:20,
-    height:150,
-    width:338,
-    marginLeft:20,
-    marginRight:20,
+    height:175,
+    width:width-40,
     borderRadius:5,
     justifyContent:'space-between',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
-    alignItems:'center'
   },
+  icon:{
+    width:32,
+    height:26
+  }
 });
