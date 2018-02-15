@@ -4,24 +4,42 @@ import {StackNavigator,TabNavigator} from 'react-navigation';
 import Scores from './src/scores.js';
 import Profile from './src/profile.js';
 import Favourite from './src/favourite.js'
+import Stats from './src/stats';
 
-var mainScreenNavigator = StackNavigator({
-  Scores: {screen: Scores},
-  Profile: {screen: Profile},
-},
-  {
-    headerMode:'none',
-});
-
-const MyApp = TabNavigator({
+const scorePages =  StackNavigator({
   Scores: {
     screen: Scores,
   },
+  Statistics: {
+    screen: Stats,
+  },
+}, {
+  initialRouteName: 'Scores',
+  
+});
+
+const FavPage =  StackNavigator({
+  Favorite: {
+    screen: Favourite,
+  },
+  Statistics: {
+    screen: Stats,
+  },
+}, {
+  initialRouteName: 'Favorite',
+  title:'none'
+});
+
+
+const MyApp = TabNavigator({
+  Scores: {
+    screen: scorePages,
+  },
   Favs: {
-    screen:Favourite ,
+    screen: FavPage,
   },
   Profile: {
-    screen:Profile,
+    screen: Profile,
   },
 }, {
   tabBarPosition: 'bottom',

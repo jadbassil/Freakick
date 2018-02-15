@@ -13,11 +13,13 @@ export default class Scores extends Component<{}> {
   static navigationOptions = {
    tabBarLabel: 'Live Score',
    tabBarIcon: ({tintColor}) => (
-     <Image
-       source={require('./assets/scores.png')}
-       style={[styles.icon, {tintColor: tintColor}]}
-     />
+     <Image source={require('./assets/scores.png')} style={[styles.icon, {tintColor: tintColor}]}/>
    ),
+    headerTitle: (
+      <LinearGradient colors={['#F7C01C','#FBDA61']} start={{x:0.0, y:0.0}} end={{x:1.0, y:0.0}} style={{justifyContent:'center',width:width,alignItems:'center',height:85}}>
+       <Image source={require('./assets/blogo.png')} style={{width:110,height:20}}/>
+      </LinearGradient>
+   )
  };
 
   constructor(props){
@@ -104,7 +106,6 @@ export default class Scores extends Component<{}> {
                   </View>
                   <View style={{width:40}}></View>
                 </View>
-                
               </TouchableHighlight>
             </View>
       )
@@ -113,18 +114,18 @@ export default class Scores extends Component<{}> {
     const matches = this.state.data.map( (item) =>{
      if(item != "No matches this day"){
       return (
-        <View key={item.id} elevation={20} style={[styles.gameView,{marginTop:15}]}>
+        <View key={item.id} elevation={20} style={[styles.gameView,{marginTop:0}]}>
         <View style={{flexDirection:'row',justifyContent:'center', alignItems:'center', marginLeft:50, marginRight:50, marginBottom:10,marginTop:30}}>
           <View style={{alignItems:'center', width: (width-100)/2-25}}>
             <Image source={{uri: 'https://firebasestorage.googleapis.com/v0/b/freakick-c4717.appspot.com/o/clubs%2Fla%20ligua%2FReal-Betis.png?alt=media&token=dfd8de0c-88d0-4347-a2d6-964e362ec783'}} style={{height:50, width:50}}/>
-            <Text style={{fontSize:13,color:'#9B9B9B',marginTop:10,fontWeight:"100"}}>{item.localteam_name}</Text>
+            <Text style={{fontSize:13,color:'#9B9B9B',marginTop:10,fontWeight:"100",textAlign:'center'}}>{item.localteam_name}</Text>
           </View>
           <View style={{marginTop:-10, alignItems:'center', width:50}}>
             <Text style={{fontSize:20, color:'black',fontWeight:"600",fontSize:24,letterSpacing:2,alignSelf:'center'}}>{item.localteam_score}:{item.visitorteam_score}</Text>
           </View>
           <View style={{alignItems:'center', width: (width-100)/2-25}}>
             <Image source={{uri: 'https://firebasestorage.googleapis.com/v0/b/freakick-c4717.appspot.com/o/clubs%2Fla%20ligua%2FCD-Alav%C3%A9s.png?alt=media&token=9a3725de-053a-411d-b458-a8bf844941f0'}} style={{height:50, width:50}}/>
-            <Text style={{fontSize:13,color:'#9B9B9B',marginTop:10,fontWeight:"100",}}>{item.visitorteam_name}</Text>
+            <Text style={{fontSize:13,color:'#9B9B9B',marginTop:10,fontWeight:"100",textAlign:'center'}}>{item.visitorteam_name}</Text>
           </View>
         </View>
   
@@ -132,7 +133,12 @@ export default class Scores extends Component<{}> {
           <View style={{height:0.5, backgroundColor:'#E9E9E9'}}></View>
             <View style={{flexDirection:'row', justifyContent:'space-between',alignSelf:'center'}}>
   
-              <TouchableHighlight style={{flexDirection:'row', marginTop:10, marginBottom:10}} onPress={(e)=>this.props.navigation.navigate('Profile')}>
+              <TouchableHighlight underlayColor={"transparent"} style={{flexDirection:'row', marginTop:10, marginBottom:10}} onPress={(e)=>this.props.navigation.navigate('Statistics',{
+                localTeam:item.localteam_name,
+                visitorTeam:item.visitorteam_name,
+                score:item.localteam_score+":"+item.visitorteam_score,
+                venue:item.venue
+              })}>
                 <View style={{flexDirection:'row', alignItems:'center'}}>
                   <Image source={require('./assets/stats.png')}/>
                   <Text style={{marginLeft:5, fontSize:10,color:'#9B9B9B'}}>View Statistics</Text>
@@ -161,11 +167,10 @@ export default class Scores extends Component<{}> {
 
         <View style={styles.container}>
 
-              <LinearGradient colors={['#FDBE21','#FAD961']} start={{x:0.0, y:0.0}} end={{x:1.0, y:0.0}} style={{justifyContent:'space-between',height:130}}>
+              <LinearGradient colors={['#F7C01C','#FBDA61']} start={{x:0.0, y:0.0}} end={{x:1.0, y:0.0}} style={{justifyContent:'space-between',height:60}}>
                     <View style={{alignItems:'center'}}>
-                    <Image source={require('./assets/blogo.png')} style={{width:110,height:20,marginTop:35,marginBottom:-20}}/>
                     </View>
-                <View style={{alignItems:'center', flexDirection:'row', justifyContent:'space-between', marginLeft:20, marginRight:20, marginTop:15}}>
+                <View style={{alignItems:'center', flexDirection:'row', justifyContent:'space-between', marginLeft:20, marginRight:20, marginTop:-5}}>
                   <View style={{width:30}}></View>
                 </View>
                 <CalendarStrip
@@ -174,8 +179,8 @@ export default class Scores extends Component<{}> {
                     style={{height: 70, paddingTop: 0, paddingBottom: 10}}
                     calendarHeaderStyle={{color: 'transparent'}}
                     calendarColor={'transparent'}
-                    dateNumberStyle={{color: 'black', fontWeight:'300'}}
-                    dateNameStyle={{color: 'black', fontWeight:'300'}}
+                    dateNumberStyle={{color: '#282828', fontWeight:'300'}}
+                    dateNameStyle={{color: '#282828', fontWeight:'300'}}
                     highlightDateNumberStyle={{color: '#282828', fontWeight:'bold'}}
                     highlightDateNameStyle={{color: '#282828', fontWeight:'bold'}}
                     disabledDateNameStyle={{color: '#282828', fontWeight:'300'}}
@@ -208,7 +213,7 @@ const styles = StyleSheet.create({
     backgroundColor:'white',
     marginBottom:20,
     height:175,
-    width:width-40,
+    width:338,
     borderRadius:5,
     justifyContent:'space-between',
     shadowColor: '#000',

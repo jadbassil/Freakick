@@ -4,7 +4,7 @@ import {TabNavigator} from 'react-navigation';
 import LinearGradient from 'react-native-linear-gradient';
 
 
-export default class Settings extends Component<{}> {
+export default class Favorite extends Component<{}> {
 
   static navigationOptions = {
    tabBarLabel: 'Favorite',
@@ -20,26 +20,7 @@ export default class Settings extends Component<{}> {
 render() {
   return (
     <View style={styles.container}>
-      <Text>Settings</Text>
-
-      <LinearGradient elevation={40} colors={['#FDBE21','#FAD961']} start={{x:0.0, y:0.0}} end={{x:1.0, y:0.0}} style={{justifyContent:'space-between', flexDirection:'row', height:100, marginBottom:-50}}>
-        <TouchableHighlight onPress={(e)=>this.props.navigation.navigate('Scores')}>
-          <View>
-            <Text>Scores</Text>
-          </View>
-        </TouchableHighlight>
-        <TouchableHighlight onPress={(e)=>this.props.navigation.navigate('Profile')}>
-          <View>
-            <Text>My Profile</Text>
-          </View>
-        </TouchableHighlight>
-        <TouchableHighlight onPress={(e)=>this.props.navigation.navigate('Settings')}>
-          <View>
-            <Text>Settings</Text>
-          </View>
-        </TouchableHighlight>
-      </LinearGradient>
-
+      <Text>Favourite</Text>
     </View>
     );
   }
