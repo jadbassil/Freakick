@@ -11,7 +11,7 @@ export default class Stats extends Component{
     tabBarIcon: ({tintColor}) => (
       <Image source={require('./assets/scores.png')} style={[styles.icon, {tintColor: tintColor}]}/>
     ),
-    title:'Match',
+    title: 'Match',
    headerStyle:{
      backgroundColor:'#F7C01C',
      borderColor:'#F7C01C'
@@ -27,7 +27,7 @@ export default class Stats extends Component{
       color1:"#F7C01C",
       color2:"#9B9B9B",
       index:0,
-      hello:null
+      hello: null
     }
   }
   

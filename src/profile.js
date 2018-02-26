@@ -9,7 +9,7 @@ import { Platform, StyleSheet, Text, View, Image, TouchableHighlight, ScrollView
 import {TabNavigator} from 'react-navigation';
 import LinearGradient from 'react-native-linear-gradient';
 
-export default class Profile extends Component<{}> {
+export default class Profile extends Component {
 
   static navigationOptions = {
      tabBarLabel: 'Profile',

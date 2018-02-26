@@ -10,18 +10,6 @@ var {height, width} = Dimensions.get('window');
 
 export default class Scores extends Component<{}> {
 
-  static navigationOptions = {
-   tabBarLabel: 'Live Score',
-   tabBarIcon: ({tintColor}) => (
-     <Image source={require('./assets/scores.png')} style={[styles.icon, {tintColor: tintColor}]}/>
-   ),
-    headerTitle: (
-      <LinearGradient colors={['#F7C01C','#FBDA61']} start={{x:0.0, y:0.0}} end={{x:1.0, y:0.0}} style={{justifyContent:'center',width:width,alignItems:'center',height:85}}>
-       <Image source={require('./assets/blogo.png')} style={{width:110,height:20}}/>
-      </LinearGradient>
-   )
- };
-
   constructor(props){
     super(props);
     this.getmatches = this.getmatches.bind(this);
@@ -34,12 +22,29 @@ export default class Scores extends Component<{}> {
     }
   }
 
+  
+  static navigationOptions = {
+   tabBarLabel: 'Live Score',
+   tabBarIcon: ({tintColor}) => (
+     <Image source={require('./assets/scores.png')} style={[styles.icon, {tintColor: tintColor}]}/>
+   ),
+    headerTitleStyle: {
+      height: 370,
+    },
+    headerTitle: (
+      <LinearGradient colors={['#F7C01C','#FBDA61']} start={{x:0.0, y:0.0}} end={{x:1.0, y:0.0}} style={{justifyContent:'center',width:width,alignItems:'center',height:85}}>
+       <Image source={require('./assets/blogo.png')} style={{width:110,height:20}}/>
+      </LinearGradient>
+   )
+ };
+
+ 
+
   componentWillMount(){
     this.getmatches(moment().format('DD.MM.YYYY'), this.state.compId);
   }
 
   componentDidMount(){
-    console.log(this.calendar.getSelectedDate().format('DD.MM.YYYY'));
     this.getCompetitions();
     setInterval(() => {this.getmatches(this.calendar.getSelectedDate().format('DD.MM.YYYY'), this.state.compId)}, 60000);
 
@@ -93,7 +98,6 @@ export default class Scores extends Component<{}> {
         <View key={item.id}>
               <TouchableHighlight style={styles.container,{height:80, justifyContent:'center'}} onPress={()=>{
                 this.setState({compId: item.id, compName: item.name});
-                console.log(this.state.compId);
                 this.getmatches(this.calendar.getSelectedDate().format('DD.MM.YYYY'), item.id);
                 this._drawer.close()}}>
 
@@ -106,6 +110,7 @@ export default class Scores extends Component<{}> {
                   </View>
                   <View style={{width:40}}></View>
                 </View>
+
               </TouchableHighlight>
             </View>
       )
@@ -147,7 +152,12 @@ export default class Scores extends Component<{}> {
   
               <View style={{marginLeft:40,marginRight:40}}></View>
   
-              <TouchableHighlight style={{flexDirection:'row',marginTop:10, marginBottom:10}}>
+              <TouchableHighlight style={{flexDirection:'row',marginTop:10, marginBottom:10}} onPress={(e)=>this.props.navigation.navigate('Comments',{
+                localTeam:item.localteam_name,
+                visitorTeam:item.visitorteam_name,
+                score:item.localteam_score+":"+item.visitorteam_score,
+                venue:item.venue
+              })}>
                 <View style={{flexDirection:'row', alignItems:'center'}}>
                   <Image source={require('./assets/comment.png')}/>
                   <Text style={{marginLeft:5,fontSize:10,color:"#9B9B9B"}}>Live comments</Text>
@@ -190,7 +200,7 @@ export default class Scores extends Component<{}> {
                     onDateSelected={(e)=>{console.log(e.format('DD.MM.YYYY')), this.getmatches(e.format('DD.MM.YYYY'), this.state.compId);}}
                     ref={(elem) => this.calendar = elem}
                   />
-              </LinearGradient>
+                  </LinearGradient>
 
 
               <ScrollView style={{flex:1, height: 1000}}>

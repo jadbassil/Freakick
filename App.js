@@ -5,6 +5,7 @@ import Scores from './src/scores.js';
 import Profile from './src/profile.js';
 import Favourite from './src/favourite.js'
 import Stats from './src/stats';
+import Comments from './src/comments';
 
 const scorePages =  StackNavigator({
   Scores: {
@@ -12,6 +13,9 @@ const scorePages =  StackNavigator({
   },
   Statistics: {
     screen: Stats,
+  },
+  Comments:{
+    screen: Comments,
   },
 }, {
   initialRouteName: 'Scores',
@@ -45,7 +49,16 @@ const MyApp = TabNavigator({
   tabBarPosition: 'bottom',
   animationEnabled: false,
   tabBarOptions: {
+    showIcon: true,
     activeTintColor: '#F7C01C',
+    inactiveTintColor: 'black',
+    labelStyle: {
+      fontSize: 9,
+    },
+    style: {
+      height: 50,
+      backgroundColor: 'white',
+    }
   },
 });
 
