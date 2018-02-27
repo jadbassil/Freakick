@@ -5,7 +5,10 @@ import Scores from './src/scores.js';
 import Profile from './src/profile.js';
 import Favourite from './src/favourite.js'
 import Stats from './src/stats';
+import LogIn from './src/logIn.js';
 import Comments from './src/comments';
+
+
 
 const scorePages =  StackNavigator({
   Scores: {
@@ -17,6 +20,9 @@ const scorePages =  StackNavigator({
   Comments:{
     screen: Comments,
   },
+  /*Login:{
+    screen: Auth,
+  }*/
 }, {
   initialRouteName: 'Scores',
   
@@ -62,4 +68,16 @@ const MyApp = TabNavigator({
   },
 });
 
-export default MyApp;
+const auth = StackNavigator({
+  Login:{
+    screen: LogIn,
+  },
+  Main:{
+    screen: MyApp,
+  }
+},{
+  headerMode: 'none',
+  initialRouteName: 'Login',
+});
+
+export default auth;

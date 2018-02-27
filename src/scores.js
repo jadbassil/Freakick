@@ -25,6 +25,7 @@ export default class Scores extends Component<{}> {
   
   static navigationOptions = {
    tabBarLabel: 'Live Score',
+   headerLeft:null,
    tabBarIcon: ({tintColor}) => (
      <Image source={require('./assets/scores.png')} style={[styles.icon, {tintColor: tintColor}]}/>
    ),
@@ -90,6 +91,23 @@ export default class Scores extends Component<{}> {
       return moment.utc(time,'HH:mm').local().format('HH:mm');
   }
 
+  openRoom(id){
+    axios.get('http://192.168.0.107:3000/api/newRoom',{
+        params:{
+            gameId: id,
+        }
+        })
+        .then(function(res){
+            console.log(res);
+            if(res.data.success == true)
+                this.props.navigation.navigate('Comments', {room_id: res.data.room_id, game_id: id});
+            else{   
+            }
+        }.bind(this))
+        .catch(function(error){
+            console.log(error);
+        }.bind(this));
+}
 
   render() {
 
@@ -152,12 +170,7 @@ export default class Scores extends Component<{}> {
   
               <View style={{marginLeft:40,marginRight:40}}></View>
   
-              <TouchableHighlight style={{flexDirection:'row',marginTop:10, marginBottom:10}} onPress={(e)=>this.props.navigation.navigate('Comments',{
-                localTeam:item.localteam_name,
-                visitorTeam:item.visitorteam_name,
-                score:item.localteam_score+":"+item.visitorteam_score,
-                venue:item.venue
-              })}>
+              <TouchableHighlight style={{flexDirection:'row',marginTop:10, marginBottom:10}} onPress={(e)=>this.openRoom(item.id)}>
                 <View style={{flexDirection:'row', alignItems:'center'}}>
                   <Image source={require('./assets/comment.png')}/>
                   <Text style={{marginLeft:5,fontSize:10,color:"#9B9B9B"}}>Live comments</Text>
@@ -223,7 +236,7 @@ const styles = StyleSheet.create({
     backgroundColor:'white',
     marginBottom:20,
     height:175,
-    width:338,
+    width:'90%',
     borderRadius:5,
     justifyContent:'space-between',
     shadowColor: '#000',
