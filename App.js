@@ -20,9 +20,6 @@ const scorePages =  StackNavigator({
   Comments:{
     screen: Comments,
   },
-  /*Login:{
-    screen: Auth,
-  }*/
 }, {
   initialRouteName: 'Scores',
   

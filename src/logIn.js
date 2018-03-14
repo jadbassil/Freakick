@@ -29,14 +29,14 @@ export default class LogIn extends Component {
     }
 
     login(){
-        axios.post('http://localhost:3000/api/login',{
+        axios.post('http://api.freakick.me:3000/api/login',{
             email: this.state.email,
             password: this.state.password,
         })
         .then(function(res){
-            console.log(res);
+            console.log(res.data.id);
             if(res.data.success == true){
-                AsyncStorage.setItem('userId', res.data.id);
+                AsyncStorage.setItem('userId', res.data.id);    
                 this.props.navigation.navigate('Main');
             }else{
                 ToastAndroid.show(res.data.message, ToastAndroid.SHORT);

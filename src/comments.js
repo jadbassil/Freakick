@@ -13,7 +13,7 @@ export default class Comments extends Component {
       super(props);
       this.stats = this.stats.bind(this);
       this.comment = this.comment.bind(this);
-      socket = io('http://localhost:3001', {
+      socket = io('http://api.freakick.me:3001', {
         transports: ['websocket']
       });
       this.state={
@@ -51,10 +51,10 @@ export default class Comments extends Component {
 
   componentDidMount(){
     AsyncStorage.getItem('userId').then(value => this.setState({userId: value}));
-  }
+  } 
 
   getMessages(){
-    axios.get('http://localhost:3000/api/getMessages',{
+    axios.get('http://api.freakick.me:3000/api/getMessages',{
       params:{
         roomId: this.props.navigation.state.params.room_id,
       }
@@ -69,13 +69,14 @@ export default class Comments extends Component {
   } 
 
   onSend(messages = []) {
+    console.log(this.state.userId);
     this.setState(previousState => ({
       messages: GiftedChat.append(previousState.messages, messages),
     }));
     socket.emit('new message', {
        message: this.state.userMessage,
        user:{
-        _id: '5a953401c3757a2b6471f156',
+        _id: this.state.userId,
        },
       roomId: this.props.navigation.state.params.room_id
       });
@@ -109,7 +110,7 @@ export default class Comments extends Component {
         <View elevation={20} style={{height: '14%', width: '100%', justifyContent: 'space-between', flexDirection:'row'}}>
           <Image source={require('./assets/realmadrid.png')} style={{height: 60, width: 45, marginTop: '3%'}}/>
           <View style={{alignItems:'center', marginTop: '3%'}}>
-              <Text>Championse League | Stadio Paolo Mazza | 72</Text> {/*get from api*/}
+              <Text>Championse League | Stadio Paolo Mazza | 72</Text>
               <LinearGradient colors={['#F7C01C','#FBDA61']} start={{x:0.0, y:0.0}} end={{x:1.0, y:0.0}} style={{justifyContent:'center',width:width*0.093,alignItems:'center'}}>
                   <Text> 0 : 0 </Text>
               </LinearGradient>
@@ -145,14 +146,14 @@ export default class Comments extends Component {
               user={{
               _id: this.state.userId,
               }}
-              renderBubble={this.renderBubble.bind(this)}
+              
           />
       </View>
       );
   }
 
 renderCom(){
-    if(this.state.color1 = "#9B9B9B"){
+    if(this.state.color1 == "#9B9B9B"){
       return (
       <View>
         <Image source={require('./assets/stats.png')}/>

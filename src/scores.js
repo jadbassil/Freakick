@@ -92,7 +92,7 @@ export default class Scores extends Component<{}> {
   }
 
   openRoom(id){
-    axios.get('http://192.168.0.107:3000/api/newRoom',{
+    axios.get('http://api.freakick.me:3000/api/newRoom',{
         params:{
             gameId: id,
         }
