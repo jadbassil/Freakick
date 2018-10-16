@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View, Image, TouchableHighlight, ScrollView, Dimensions } from 'react-native';
 import {TabNavigator} from 'react-navigation';
 import LinearGradient from 'react-native-linear-gradient';
+import { Statistics } from './stats/statistics';
+import { Chat } from './stats/chat';
 var {height, width} = Dimensions.get('window');
 
 export default class Stats extends Component{
@@ -32,14 +34,14 @@ export default class Stats extends Component{
   }
   
   renderCom(){
-    if(this.state.color1 = "#9B9B9B"){
-      return (
-      <View>
-        <Image source={require('./assets/comment.png')}/>
-        </View>
-    );
+    if(this.state.index == 0){
+      return <Statistics/>
     }else{
-      return <Image source={require('./assets/comment.png')}/>
+      return(
+        <Text>
+          Hello
+        </Text>
+      )
     }
   }
 
@@ -95,7 +97,7 @@ render() {
           </View>
         </View>
       </View>
-      <Text>Hello</Text>
+      {this.renderCom()}
     </View>
     );
   }
@@ -121,7 +123,6 @@ container: {
   flex: 1,
   backgroundColor: 'white',
   width:'100%',
-  justifyContent:'space-between'
 },
 icon:{
   width:32,
@@ -130,7 +131,7 @@ icon:{
 gameView:{
   backgroundColor:'#F7F7F7',
   marginBottom:20,
-  height:195,
+  height:210,
   width:width,
   borderRadius:5,
   justifyContent:'space-between',

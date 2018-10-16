@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View, Image, TouchableHighlight, ScrollView, Dimensions } from 'react-native';
-import {StackNavigator,TabNavigator} from 'react-navigation';
+import {StackNavigator,TabNavigator,SwitchNavigator} from 'react-navigation';
+
 import Scores from './src/scores.js';
 import Profile from './src/profile.js';
 import Favourite from './src/favourite.js'
@@ -8,21 +9,18 @@ import Stats from './src/stats';
 import LogIn from './src/logIn.js';
 import Comments from './src/comments';
 
-
-
-const scorePages =  StackNavigator({
+const ScorePage =  StackNavigator({
   Scores: {
     screen: Scores,
   },
-  Statistics: {
-    screen: Stats,
+  Statistics:{
+    screen:Stats
   },
   Comments:{
     screen: Comments,
   },
 }, {
   initialRouteName: 'Scores',
-  
 });
 
 const FavPage =  StackNavigator({
@@ -34,47 +32,40 @@ const FavPage =  StackNavigator({
   },
 }, {
   initialRouteName: 'Favorite',
-  title:'none'
 });
 
-
-const MyApp = TabNavigator({
-  Scores: {
-    screen: scorePages,
+const MyApp = createBottomTabNavigator({
+  Explore: {
+    screen: ScorePage,
+    navigationOptions: {
+      tabBarLabel: 'SCORES',
+      tabBarIcon: ({ tintColor }) => (
+       <Image source={require('./src/assets/scores.png')} style={[styles.icon, {tintColor: tintColor}]}/>
+     )
+    }
   },
-  Favs: {
+  Favorites: {
     screen: FavPage,
+    navigationOptions: {
+      tabBarLabel: 'FAVORITES',
+      tabBarIcon: ({ tintColor }) => (
+       <Image source={require('./src/assets/favorite.png')} style={[styles.icon, {tintColor: tintColor}]}/>
+     )
+    }
   },
   Profile: {
     screen: Profile,
-  },
-}, {
-  tabBarPosition: 'bottom',
-  animationEnabled: false,
-  tabBarOptions: {
-    showIcon: true,
-    activeTintColor: '#F7C01C',
-    inactiveTintColor: 'black',
-    labelStyle: {
-      fontSize: 9,
-    },
-    style: {
-      height: 50,
-      backgroundColor: 'white',
+    navigationOptions: {
+      tabBarLabel: 'PROFILE',
+      tabBarIcon: ({ tintColor }) => (
+       <Image source={require('./src/assets/search.png')} style={[styles.icon, {tintColor: tintColor}]}/>
+     )
     }
-  },
-});
-
-const auth = StackNavigator({
-  Login:{
-    screen: LogIn,
-  },
-  Main:{
-    screen: MyApp,
   }
-},{
-  headerMode: 'none',
-  initialRouteName: 'Login',
-});
+  }
 
-export default auth;
+
+const Login = createStackNavigator({ Home: Home, Item: Item });
+const Register = createStackNavigator({ SignIn: Login });
+const App = createStackNavigator({ SignIn: Login });
+
